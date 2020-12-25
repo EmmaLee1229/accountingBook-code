@@ -17,6 +17,7 @@
 <script lang="ts">
     // import x from '../../src/assets/icons/labels.svg';
     // console.log(x)
+
     const importAll =(requireContext: __WebpackModuleApi.RequireContext)=>requireContext.keys().forEach(requireContext);
     try{
         importAll(require.context('../assets/icons',true,/\.svg$/));
@@ -30,6 +31,7 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "~@/assets/style/helper.scss";
  nav {
      display: flex;
      /*justify-content: space-between;*/
@@ -48,7 +50,7 @@
       }
   }
      > .item.selected {
-         color: #E9E8D4;
+         color: $color-heighlight;
      }
 }
 </style>
