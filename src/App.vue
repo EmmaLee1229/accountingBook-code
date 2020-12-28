@@ -12,5 +12,11 @@
     -moz-osx-font-smoothing: grayscale;
     font-family: $font-hei;
     line-height: 1.5;
+    font-size: 16px;
   }
+  /*.clearfix::after {*/
+  /*  content: '';*/
+  /*  display: block;*/
+  /*  clear: both;*/
+  /*}*/
 </style>
