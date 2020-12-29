@@ -5,24 +5,43 @@
     </ul>
 </template>
 
-<script>
-    export default {
-        name: "types",
-        data(){
-            return {
-                type:'-'
-            }
-        },
-        methods:{
-            selectType(type){
-                if(type!=='-'&&type!=='+'){
-                    throw new Error('type is unknown!')
-                }else {
-                    this.type = type
-                }
+<script lang="ts">
+    //下面是ts的写法
+    import Vue from "vue";
+    import {Component} from "vue-property-decorator";
+
+    @Component
+    export default class Types extends Vue {
+        type = "-";
+
+        selectType(type: string) {
+            if (type !== "-" && type !== "+") {
+                throw new Error("type is unknown!");
+            } else {
+                this.type = type;
             }
         }
+
     }
+
+    //下面是js的写法
+    // export default {
+    //     name: "types",
+    //     data(){
+    //         return {
+    //             type:'-'
+    //         }
+    //     },
+    //     methods:{
+    //         selectType(type){
+    //             if(type!=='-'&&type!=='+'){
+    //                 throw new Error('type is unknown!')
+    //             }else {
+    //                 this.type = type
+    //             }
+    //         }
+    //     }
+    // }
 </script>
 
 <style lang="scss" scoped>
