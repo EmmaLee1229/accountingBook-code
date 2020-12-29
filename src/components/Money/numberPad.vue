@@ -1,33 +1,78 @@
 <template>
     <div class="numberPad">
         <div class="typePad">
-            1000
+            {{output}}
         </div>
         <div class="buttons">
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>删除</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>清空</button>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button class="ok">OK</button>
-            <button class="zero">0</button>
-            <!--                <button>+</button>-->
-            <!--                <button>-</button>-->
-            <button>.</button>
+            <button @click="inputContent">1</button>
+            <button @click="inputContent">2</button>
+            <button @click="inputContent">3</button>
+            <button @click="deleteNum">删除</button>
+            <button @click="inputContent">4</button>
+            <button @click="inputContent">5</button>
+            <button @click="inputContent">6</button>
+            <button @click="removeAll">清空</button>
+            <button @click="inputContent">7</button>
+            <button @click="inputContent">8</button>
+            <button @click="inputContent">9</button>
+            <button @click="ok" class="ok">OK</button>
+            <button class="zero" @click="inputContent">0</button>
+            <button @click="inputContent">.</button>
         </div>
     </div>
 
 </template>
 
-<script>
-    export default {
-        name: "numberPad"
+<script lang="ts">
+    import Vue from "vue";
+    import {Component} from "vue-property-decorator";
+    @Component
+    export default class NumberPad extends Vue{
+       output = '0';
+       inputContent(event: MouseEvent){
+           //强制执行类型
+           const button = event.target as HTMLButtonElement;
+           const input = button.textContent as string;
+           if(this.output.length>=16){
+               return;
+           }
+           if(this.output === '0'){
+               if(input ==='0'){
+                   return;
+               }else if('123456789'.indexOf(input)>=0){
+                   this.output = input;
+                   return this.output;
+               }else {
+                   this.output+=input;
+                   return this.output;
+               }
+           }else if(this.output.indexOf('.')>=0){
+               if(input==='.'){
+                   return ;
+               }else {
+                   this.output += input;
+                   return this.output;
+               }
+           }else {
+               return this.output+=input;
+           }
+       }
+       deleteNum(){
+           if(this.output.length === 1){
+               this.output = '0';
+               return this.output;
+           }else {
+               this.output = this.output.slice(0,-1);
+               return this.output;
+           }
+       }
+       removeAll(){
+            return this.output = '0';
+       }
+       // ok(){
+       //
+       // }
+
     }
 </script>
 
@@ -41,6 +86,7 @@
             text-align: right;
             box-shadow: inset 0 -3px 3px -3px $color-shadow,
             inset 0 3px 3px -3px $color-shadow;
+            height: 72px;
 
         }
 
