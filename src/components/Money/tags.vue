@@ -2,20 +2,45 @@
     <div class="tags">
 
         <div class="new">
-            <button>新增标签</button>
+            <button @click="addTags">新增标签</button>
         </div>
         <ul class="current">
-            <li class="selected">衣</li>
-            <li>食</li>
-            <li>住</li>
-            <li>行</li>
+            <li v-for="data in dataSource" :key="data"
+                @click="toggle(data)"
+                :class="selectedData.indexOf(data)>=0 &&'selected'"
+            >{{data}}
+            </li>
+
         </ul>
     </div>
 </template>
 
-<script>
-    export default {
-        name: "tags"
+<script lang="ts">
+    import Vue from "vue";
+    import {Component, Prop} from "vue-property-decorator";
+
+    @Component
+    export default class Tags extends Vue {
+        @Prop(Array) readonly dataSource: string[] | undefined;
+        selectedData: string[] = [];
+
+        toggle(data: string) {
+            if (this.selectedData.indexOf(data) < 0) {
+                this.selectedData.push(data);
+            } else {
+                this.selectedData.splice(this.selectedData.indexOf(data), 1);
+            }
+        }
+
+        addTags() {
+            const newTag = window.prompt("请输入你想添加的标签");
+            if (newTag === "") {
+                alert("标签不能为空，请重新输入");
+            } else if (this.dataSource) {
+                this.$emit('update:dataSource', [...this.dataSource, newTag]);
+            }
+
+        }
     }
 </script>
 
@@ -29,6 +54,7 @@
         > .current {
             display: flex;
             font-size: 14px;
+            flex-wrap: wrap;
 
             > li {
                 background: #495976;
