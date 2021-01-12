@@ -30,6 +30,7 @@
             } else {
                 this.selectedData.splice(this.selectedData.indexOf(data), 1);
             }
+            this.$emit('update:value',this.selectedData)
         }
 
         addTags() {
