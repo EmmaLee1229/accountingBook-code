@@ -96,6 +96,7 @@
             box-shadow: inset 0 -3px 3px -3px $color-shadow,
             inset 0 3px 3px -3px $color-shadow;
             height: 72px;
+            background: #ffffff;
 
         }
 

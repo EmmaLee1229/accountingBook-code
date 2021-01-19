@@ -47,12 +47,13 @@
 
 <style lang="scss" scoped>
     .tags {
-        margin: 12px;
+        /*margin: 12px;*/
         display: flex;
         flex-direction: column-reverse;
         flex-grow: 1;
-
+        background: #ffffff;
         > .current {
+            margin: 12px;
             display: flex;
             font-size: 14px;
             flex-wrap: wrap;
@@ -75,6 +76,7 @@
         }
 
         > .new {
+            margin: 12px;
             padding-top: 4px;
 
             > button {

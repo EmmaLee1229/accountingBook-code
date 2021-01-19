@@ -27,5 +27,6 @@
       /*border: 1px solid blue;*/
         flex-grow: 1;
         overflow: auto;
+
     }
 </style>
