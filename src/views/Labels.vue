@@ -1,12 +1,15 @@
 <template>
     <div>
         <Layout>
-            <ul class="labels">
-                <li  v-for="tag in tags" :key="tag">
-                    <span>{{tag}}</span>
+            <div class="labels">
+                <router-link  v-for="tag in tags" :key="tag.id"
+                :to="`/labels/EditLabel/${tag.id}`"
+                class="tag"
+                >
+                    <span>{{tag.name}}</span>
                     <Icon name="right" class="rightIcon"></Icon>
-                </li>
-            </ul>
+                </router-link>
+            </div>
             <div class="newTags-wrapper">
                 <button class="newTags" @click="createTags">新增标签</button>
             </div>
@@ -44,13 +47,14 @@
         font-size: 16px;
         color: #3A465C;
 
-        > li {
+        >.tag {
             padding: 0 20px;
             display: flex;
             align-items: center;
             min-height: 40px;
             justify-content: space-between;
             border-bottom: 1px solid lighten(#333333, 70%);
+            color: #3A465C;
         }
     }
 

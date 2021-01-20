@@ -20,7 +20,7 @@
 
 
     window.localStorage.setItem('Version','0.1');
-    const tagList = tagListModel.fetch();
+    const tagList = tagListModel.fetch().map(item=>item.name);
     @Component({
         components: {Note, Types, Tags, NumberPad}
     })
