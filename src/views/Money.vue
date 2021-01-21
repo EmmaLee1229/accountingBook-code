@@ -1,7 +1,7 @@
 <template>
     <Layout class-prefix="layout">
         <number-pad :value.sync="record.mount" @submit="updateMount"/>
-        <note @update:value="updateNote"/>
+        <note name='备注' placeholder="请在这里添加备注" @update:value="updateNote"/>
         <tags :data-source.sync="tags" @update:value="updateTags"/>
         <types :value.sync="record.type"/>
     </Layout>
