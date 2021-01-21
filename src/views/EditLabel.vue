@@ -39,12 +39,12 @@
 
 <style lang="scss" scoped>
     .title {
-        font-size: 16px;
+        font-size: 20px;
         text-align: center;
         background: white;
         display: flex;
         justify-content: space-between;
-        padding: 12px 16px;
+        padding: 20px 16px;
         align-items: center;
         color: #3A465C;
         font-weight: bold;
@@ -65,5 +65,6 @@
         text-align: center;
         padding: 16px;
         margin-top: 44-16px;
+        font-size: 16px;
     }
 </style>

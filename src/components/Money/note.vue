@@ -2,7 +2,7 @@
     <div>
         <label class="note">
             <span class="name">{{this.name}}</span>
-            <input type="text" :placeholder="this.placeholder" v-model="value">
+            <input type="text" :placeholder="this.placeholder" :value="value" @input="onValueChange($event.target.value)">
         </label>
     </div>
 </template>
@@ -13,7 +13,7 @@
 
     @Component
     export default class Note extends Vue {
-        value = "";
+        @Prop({default:''}) readonly value!: string;
         @Prop({required:true})name!: string;
         @Prop()placeholder!: string
         @Watch("value")
