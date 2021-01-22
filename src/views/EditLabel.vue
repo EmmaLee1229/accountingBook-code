@@ -6,7 +6,7 @@
             <span class="right"></span>
         </div >
         <div class="noteLabel">
-            <note name="标签名" :placeholder="this.tag.name" />
+            <note name="标签名" :placeholder="this.tag.name" :value="this.tag.name" @update:value="updateTag"/>
         </div>
         <div class="button-wrapper">
             <Button>删除标签</Button>
@@ -32,6 +32,9 @@
             const tags = tagListModel.data;
              this.tag = tags.filter(item=>item.id===id)[0]
 
+        }
+        updateTag(name: string){
+            console.log(name);
         }
 
     }
