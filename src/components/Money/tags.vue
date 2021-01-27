@@ -5,10 +5,10 @@
             <button @click="addTags">新增标签</button>
         </div>
         <ul class="current">
-            <li v-for="data in dataSource" :key="data"
+            <li v-for="data in dataSource" :key="data.id"
                 @click="toggle(data)"
                 :class="selectedData.indexOf(data)>=0 &&'selected'"
-            >{{data}}
+            >{{data.name}}
             </li>
 
         </ul>
@@ -18,6 +18,7 @@
 <script lang="ts">
     import Vue from "vue";
     import {Component, Prop} from "vue-property-decorator";
+    import tagListModel from "@/models/tagListModel";
 
     @Component
     export default class Tags extends Vue {
@@ -38,7 +39,11 @@
             if (newTag === "") {
                 alert("标签不能为空，请重新输入");
             } else if (this.dataSource) {
-                this.$emit('update:dataSource', [...this.dataSource, newTag]);
+                if(newTag){
+                    this.$emit('update:dataSource', [...this.dataSource, newTag]);
+                    tagListModel.create(newTag)
+                }
+
             }
 
         }

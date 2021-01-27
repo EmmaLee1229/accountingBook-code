@@ -1,14 +1,6 @@
+import createID from '@/lib/createId';
+
 const localStorageName = 'tagList';
-type Tag = {
-    id: string;
-    name: string;
-}
-type tagListType = {
-    data: Tag[];
-    fetch: () => Tag[];
-    create: (data: string) => 'success' | 'duplicated';
-    save: () => void;
-}
 const tagListModel: tagListType = {
     data: [],
     fetch() {
@@ -17,15 +9,50 @@ const tagListModel: tagListType = {
 
     },
     create(name) {
-        const names = this.data.map(item=>item.name)
+        const names = this.data.map(item => item.name);
         if (names.indexOf(name) >= 0) {
             return 'duplicated';
         }
-            const id = name;
-            this.data.push({id,name});
-            this.save();
-            return 'success';
+        const id = createID().toString();
+        this.data.push({id, name});
+        this.save();
+        return 'success';
 
+
+    },
+    update(id, name) {
+        const ids = this.data.map(item => item.id);
+        if (ids.indexOf(id) >= 0) {
+            const names = this.data.map(item => item.name);
+            if (names.indexOf(name) >= 0) {
+                return 'duplicated';
+            } else {
+                const tag = this.data.filter(data => data.id === id)[0];
+                tag.name = name;
+                this.save();
+                return 'success';
+            }
+        } else {
+            return 'fail';
+        }
+    },
+    delete(id) {
+        const ids = this.data.map(item => item.id);
+        if (ids.indexOf(id) >= 0) {
+            let index = -1;
+            for (let i = 0; i < this.data.length; i++) {
+                if (this.data[i].id === id) {
+                    index = i;
+                    break;
+                }
+            }
+            this.data.splice(index, 1);
+            this.save();
+            window.alert('删除成功');
+            return true;
+        } else {
+            return false;
+        }
 
     },
     save() {

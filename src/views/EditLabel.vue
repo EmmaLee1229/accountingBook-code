@@ -1,15 +1,15 @@
 <template>
     <Layout>
-        <div class="title">
-            <Icon class="left" name="left"/>
+        <div class="title"  >
+            <span @click="goBack" ><Icon class="left" name="left"/></span>
             <span>编辑标签</span>
             <span class="right"></span>
         </div >
         <div class="noteLabel">
-            <note name="标签名" :placeholder="this.tag.name" :value="this.tag.name" @update:value="updateTag"/>
+            <note name="标签名" :placeholder="this.tag.name" :value="tag.name" @update:value="updateTag"/>
         </div>
         <div class="button-wrapper">
-            <Button>删除标签</Button>
+            <Button @click="deleteTag">删除标签</Button>
         </div>
 
     </Layout>
@@ -28,13 +28,31 @@
         tag: {id: string;name: string}|undefined;
         created(){
             const id = this.$route.params.id;
-            tagListModel.fetch();
+            window.tagList;
             const tags = tagListModel.data;
-             this.tag = tags.filter(item=>item.id===id)[0]
-
+             this.tag = tags.filter(item=>item.id===id)[0];
+            if(!this.tag){
+                this.$router.replace('/404')
+            }
         }
         updateTag(name: string){
-            console.log(name);
+            if(this.tag){
+                tagListModel.update(this.tag.id,name);
+            }
+
+        }
+        deleteTag(){
+            if(this.tag){
+                if(tagListModel.delete(this.tag.id)){
+                    this.$router.back()
+                }
+
+            }
+
+        }
+        goBack(){
+            console.log('click');
+            this.$router.back()
         }
 
     }

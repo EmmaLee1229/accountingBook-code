@@ -20,12 +20,12 @@
 
 
     window.localStorage.setItem('Version','0.1');
-    const tagList = tagListModel.fetch().map(item=>item.name);
+    //const tagList = tagListModel.fetch().map(item=>item.name);
     @Component({
         components: {Note, Types, Tags, NumberPad}
     })
     export default class Money extends Vue {
-        tags= tagList;
+        tags= window.tagList;
         record: RecordItem = {
             tags: [],
             type: "-",
@@ -35,15 +35,13 @@
         };
         recordList = recordListModel.fetch();
         updateMount() {
-            const oldRecord: RecordItem = JSON.parse(JSON.stringify(this.record));
-            oldRecord.creatAt = new Date();
-            this.recordList.push(oldRecord);
+            recordListModel.create(this.record);
 
         }
 
         @Watch("recordList")
         onRecordListChange() {
-            recordListModel.save(this.recordList);
+            recordListModel.save();
         }
 
         updateNote(value: string) {
