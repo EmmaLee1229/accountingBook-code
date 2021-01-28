@@ -10,7 +10,7 @@
 
 <script lang="ts">
     import Vue from "vue";
-    import {Component, Watch} from "vue-property-decorator";
+    import {Component} from "vue-property-decorator";
     import NumberPad from "@/components/Money/numberPad.vue";
     import Tags from "@/components/Money/tags.vue";
     import Types from "@/components/Money/types.vue";
@@ -33,16 +33,16 @@
             mount: 0,
 
         };
-        recordList = recordListModel.fetch();
+        recordList = window.recordList;
         updateMount() {
-            recordListModel.create(this.record);
+            window.createRecord(this.record);
 
         }
-
-        @Watch("recordList")
-        onRecordListChange() {
-            recordListModel.save();
-        }
+        //
+        // @Watch("recordList")
+        // onRecordListChange() {
+        //     recordListModel.save();
+        // }
 
         updateNote(value: string) {
             this.record.note = value;

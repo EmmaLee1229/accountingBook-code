@@ -11,6 +11,8 @@ interface Window {
     remove: (id: string) => boolean;
     createTag: (message: string) => void;
     findTag: (id: string) => {id: string;name: string};
+    recordList: RecordItem[];
+    createRecord: (record: RecordItem) => void;
 }
 type Tag = {
     id: string;
