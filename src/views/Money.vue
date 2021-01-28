@@ -3,7 +3,7 @@
         <number-pad :value.sync="record.mount" @submit="updateMount"/>
         <note name='备注' placeholder="请在这里添加备注" @update:value="updateNote"/>
         <tags :data-source.sync="tags" @update:value="updateTags"/>
-        <types :value.sync="record.type"/>
+        <types :value.sync="record.type" class="title"/>
     </Layout>
 
 </template>
@@ -59,6 +59,9 @@
         /*border: 1px solid red;*/
         display: flex;
         flex-direction: column-reverse;
+        >.title {
+
+        }
     }
 </style>
 

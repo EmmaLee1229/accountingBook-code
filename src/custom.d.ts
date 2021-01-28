@@ -7,6 +7,10 @@ type RecordItem = {
 }
 interface Window {
     tagList: Tag[];
+    update: (id: string,name: string) => 'success' | 'duplicated' | 'fail';
+    remove: (id: string) => boolean;
+    createTag: (message: string) => void;
+    findTag: (id: string) => {id: string;name: string};
 }
 type Tag = {
     id: string;

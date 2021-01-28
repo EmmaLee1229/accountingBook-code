@@ -28,22 +28,20 @@
         tag: {id: string;name: string}|undefined;
         created(){
             const id = this.$route.params.id;
-            window.tagList;
-            const tags = tagListModel.data;
-             this.tag = tags.filter(item=>item.id===id)[0];
+            this.tag = window.findTag(id);
             if(!this.tag){
                 this.$router.replace('/404')
             }
         }
         updateTag(name: string){
             if(this.tag){
-                tagListModel.update(this.tag.id,name);
+               window.update(this.tag.id,name);
             }
 
         }
         deleteTag(){
             if(this.tag){
-                if(tagListModel.delete(this.tag.id)){
+                if(window.remove(this.tag.id)){
                     this.$router.back()
                 }
 

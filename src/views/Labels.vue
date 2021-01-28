@@ -30,13 +30,7 @@
             const name = window.prompt("请输入您想增加的标签名");
             if (name) {
                 const message = tagListModel.create(name);
-                if (message === "success") {
-                    window.alert("标签添加成功");
-
-                } else if (message === "duplicated") {
-                    window.alert("标签重复，添加失败");
-                }
-
+                window.createTag(message);
             }
         }
     }

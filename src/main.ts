@@ -13,7 +13,30 @@ Vue.component('Nav', Nav);
 Vue.component('Layout', Layout);
 Vue.component('Icon', Icon);
 
+window.findTag = (id: string) => {
+    const tags = window.tagList;
+    const tag = tags.filter(item => item.id === id)[0];
+    return tag;
+};
 window.tagList = tagListModel.fetch();
+window.createTag = (message: string) => {
+    if (message === 'success') {
+        window.alert('标签添加成功');
+
+    } else if (message === 'duplicated') {
+        window.alert('标签重复，添加失败');
+    }
+};
+window.update = (id: string, name: string) => {
+    return tagListModel.update(id, name);
+};
+window.remove = (id: string) => {
+    if (tagListModel.delete(id)) {
+        return true;
+    } else {
+        return false;
+    }
+};
 new Vue({
     router,
     store,
