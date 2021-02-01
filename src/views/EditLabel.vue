@@ -20,6 +20,7 @@
     import {Component} from "vue-property-decorator";
     import Note from '@/components/Money/note.vue';
     import Button from '@/components/Button.vue';
+    import store from '@/store/index2';
     @Component({
         components: {Button, Note}
     })
@@ -27,20 +28,20 @@
         tag: {id: string;name: string}|undefined;
         created(){
             const id = this.$route.params.id;
-            this.tag = window.findTag(id);
+            this.tag = store.findTag(id);
             if(!this.tag){
                 this.$router.replace('/404')
             }
         }
         updateTag(name: string){
             if(this.tag){
-               window.update(this.tag.id,name);
+               store.update(this.tag.id,name);
             }
 
         }
         deleteTag(){
             if(this.tag){
-                if(window.remove(this.tag.id)){
+                if(store.remove(this.tag.id)){
                     this.$router.back()
                 }
 

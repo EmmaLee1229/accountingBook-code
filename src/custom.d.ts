@@ -5,15 +5,6 @@ type RecordItem = {
     mount: number;
     creatAt?: Date;
 }
-interface Window {
-    tagList: Tag[];
-    update: (id: string,name: string) => 'success' | 'duplicated' | 'fail';
-    remove: (id: string) => boolean;
-    createTag: (message: string) => void;
-    findTag: (id: string) => {id: string;name: string};
-    recordList: RecordItem[];
-    createRecord: (record: RecordItem) => void;
-}
 type Tag = {
     id: string;
     name: string;

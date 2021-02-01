@@ -2,7 +2,7 @@
     <Layout class-prefix="layout">
         <number-pad :value.sync="record.mount" @submit="updateMount"/>
         <note name='备注' placeholder="请在这里添加备注" @update:value="updateNote"/>
-        <tags :data-source.sync="tags" @update:value="updateTags"/>
+        <tags/>
         <types :value.sync="record.type" class="title"/>
     </Layout>
 
@@ -15,17 +15,15 @@
     import Tags from "@/components/Money/tags.vue";
     import Types from "@/components/Money/types.vue";
     import Note from "@/components/Money/note.vue";
-    import recordListModel from "@/models/recordListModel";
-    import tagListModel from "@/models/tagListModel";
+    import store from '@/store/index2';
 
 
     window.localStorage.setItem('Version','0.1');
-    //const tagList = tagListModel.fetch().map(item=>item.name);
+    //const tagList.ts = tagListModel.fetch().map(item=>item.name);
     @Component({
         components: {Note, Types, Tags, NumberPad}
     })
     export default class Money extends Vue {
-        tags= window.tagList;
         record: RecordItem = {
             tags: [],
             type: "-",
@@ -33,10 +31,9 @@
             mount: 0,
 
         };
-        recordList = window.recordList;
+        recordList = store.recordList;
         updateMount() {
-            window.createRecord(this.record);
-
+            store.createRecord(this.record);
         }
         //
         // @Watch("recordList")
@@ -46,10 +43,6 @@
 
         updateNote(value: string) {
             this.record.note = value;
-        }
-
-        updateTags(value: string[]) {
-            this.record.tags = value;
         }
     }
 
