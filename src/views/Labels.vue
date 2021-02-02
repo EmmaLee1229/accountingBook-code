@@ -18,7 +18,6 @@
 <script lang="ts">
     import Vue from "vue";
     import {Component} from "vue-property-decorator";
-    import tagStore from "@/store/tagList";
     import Button from '@/components/Button.vue';
     import store from '@/store/index2';
 
@@ -30,8 +29,7 @@
         createTags() {
             const name = window.prompt("请输入您想增加的标签名");
             if (name) {
-                const message = tagStore.createTag(name);
-               store.createTag(message);
+               store.createTag(name);
             }
         }
     }
