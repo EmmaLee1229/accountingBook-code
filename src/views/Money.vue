@@ -15,15 +15,16 @@
     import Tags from "@/components/Money/tags.vue";
     import Types from "@/components/Money/types.vue";
     import Note from "@/components/Money/note.vue";
-    import store from '@/store/index2';
 
 
     window.localStorage.setItem('Version','0.1');
-    //const tagList.ts = tagListModel.fetch().map(item=>item.name);
     @Component({
         components: {Note, Types, Tags, NumberPad}
     })
     export default class Money extends Vue {
+        get recordList(){
+            return this.$store.state.recordList;
+        }
         record: RecordItem = {
             tags: [],
             type: "-",
@@ -31,16 +32,14 @@
             mount: 0,
 
         };
-        recordList = store.recordList;
-        updateMount() {
-            store.createRecord(this.record);
+        //recordList = this.$store.state.recordList;
+        created(){
+            this.$store.commit('fetchRecord')
         }
-        //
-        // @Watch("recordList")
-        // onRecordListChange() {
-        //     recordListModel.save();
-        // }
 
+        updateMount() {
+            this.$store.commit('createRecord',this.record);
+        }
         updateNote(value: string) {
             this.record.note = value;
         }

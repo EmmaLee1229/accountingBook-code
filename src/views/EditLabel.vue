@@ -20,36 +20,37 @@
     import {Component} from "vue-property-decorator";
     import Note from '@/components/Money/note.vue';
     import Button from '@/components/Button.vue';
-    import store from '@/store/index2';
     @Component({
         components: {Button, Note}
     })
     export default class EditLabel extends Vue {
-        tag: {id: string;name: string}|undefined;
+       get tag(){
+           return this.$store.state.currentTag
+       }
         created(){
             const id = this.$route.params.id;
-            this.tag = store.findTag(id);
+            this.$store.commit('fetchTags');
+            this.$store.commit('findTag',id);
             if(!this.tag){
                 this.$router.replace('/404')
             }
         }
         updateTag(name: string){
             if(this.tag){
-               store.update(this.tag.id,name);
+               this.$store.commit('update',{
+                   id:this.tag.id,name:name
+               });
             }
 
         }
         deleteTag(){
             if(this.tag){
-                if(store.remove(this.tag.id)){
-                    this.$router.back()
-                }
+                this.$store.commit('remove',this.tag.id)
 
             }
 
         }
         goBack(){
-            console.log('click');
             this.$router.back()
         }
 
