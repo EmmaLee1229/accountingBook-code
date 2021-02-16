@@ -3,7 +3,7 @@ type RecordItem = {
     type: string;
     note: string;
     mount: number;
-    creatAt?: Date;
+    creatAt?: string;
 }
 type Tag = {
     id: string;

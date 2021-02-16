@@ -50,7 +50,7 @@
       }
   }
      > .item.selected {
-         color: $color-heighlight;
+         color: darken($color-heighlight,20%);
      }
 }
 </style>
