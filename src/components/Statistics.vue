@@ -4,11 +4,11 @@
                 <Tabs :data-source="typeList" class-prefix="types" :value.sync="typesValue" />
                 <Tabs :data-source="dateList" class-prefix="interval" :value.sync="dateValue"/>
                 <ol class="dateList">
-                    <li v-for="(items,index) in result" :key="index" >
-                            <h3 class="title">{{items.title}} <span class="sumMoney">{{'¥ '+items.sum}}</span></h3>
+                    <li v-for="(results,index) in result" :key="index" >
+                            <h3 class="title">{{formatDate(results.title)}} <span class="sumMoney">{{'¥ '+results.sum}}</span></h3>
 
                         <ol class="moneyList">
-                            <li v-for="item in items.list" :key="item.id" class="record">
+                            <li v-for="item in results.items" :key="item.id" class="record">
                                 <span>{{tagString(item.tags)}}</span>
                                 <span class="note">{{limitShow(item.note)}}</span>
                                 <span>¥{{item.mount}}</span>
@@ -27,6 +27,8 @@
     import Tabs from '@/components/Tabs.vue';
     import dateList from "@/constants/DateConstants";
     import typeList from "@/constants/typeList";
+    import dayjs from 'dayjs'
+    import clone from '@/lib/clone';
     @Component(
         {
             components:{Tabs}
@@ -44,20 +46,39 @@
                 return note;
             }
         }
+        formatDate(date: string){
+            const now = new Date();
+            if(dayjs(date).isSame(now,'day')){
+                return '今天';
+            }else {
+                return dayjs(date).format('YYYY年M月D日');
+            }
+        }
         get recordList(){
             return this.$store.state.recordList;
         }
         get result(){
             const recordList = this.recordList;
-            const hashTable: {[key: string]: {title: string;list: RecordItem[];sum: number}} ={};
-            for (let i=0;i<recordList.length;i++){
-                const date = recordList[i].creatAt.split('T')[0];
-                hashTable[date] = hashTable[date] || {title:date,list:[],sum:0};
-                hashTable[date].list.push(recordList[i]);
-                hashTable[date].sum += JSON.parse(recordList[i].mount);
+            // const hashTable: {[key: string]: {title: string;list: RecordItem[];sum: number}} ={};
+            const newRecordList =clone(recordList).sort((a: RecordItem,b: RecordItem)=>dayjs(b.creatAt).valueOf()-dayjs(a.creatAt).valueOf());
+            type storeListType =[{title: string;items: RecordItem[];sum: number}]
+            const storeList = [{title:dayjs(newRecordList[0].creatAt).format("YYYY-MM-DD"),items:[newRecordList[0]],sum:Number(newRecordList[0].mount)}] as storeListType;
+            for (let i=1;i<newRecordList.length;i++){
+                const current = newRecordList[i];
+                const last = storeList[storeList.length-1];
+                if(dayjs(current.creatAt).isSame(dayjs(last.title),"day")){
+                    last.items.push(current);
+                    last.sum+= JSON.parse(current.mount);
+                }else {
+                    storeList.push({title:dayjs(current.creatAt).format("YYYY-MM-DD"),items:[current],sum:Number(current.mount)});
+                }
+                // const date = newRecordList[i].creatAt.split('T')[0];
+                // console.log(newRecordList[i].creatAt);
+                // hashTable[date] = hashTable[date] || {title:date,list:[],sum:0};
+                // hashTable[date].list.push(recordList[i]);
+                // hashTable[date].sum += JSON.parse(recordList[i].mount);
             }
-
-            return hashTable
+            return storeList
         }
         typesValue= '-';
         typeList = typeList;
