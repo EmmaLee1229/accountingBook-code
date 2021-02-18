@@ -2,7 +2,6 @@
     <div class="x" >
             <Layout>
                 <Tabs :data-source="typeList" class-prefix="types" :value.sync="typesValue" />
-                <Tabs :data-source="dateList" class-prefix="interval" :value.sync="dateValue"/>
                 <ol class="dateList">
                     <li v-for="(results,index) in result" :key="index" >
                             <h3 class="title">{{formatDate(results.title)}} <span class="sumMoney">{{'¥ '+results.sum}}</span></h3>
@@ -58,10 +57,11 @@
             return this.$store.state.recordList;
         }
         get result(){
-            const recordList = this.recordList;
+            const {recordList} = this;
             // const hashTable: {[key: string]: {title: string;list: RecordItem[];sum: number}} ={};
-            const newRecordList =clone(recordList).sort((a: RecordItem,b: RecordItem)=>dayjs(b.creatAt).valueOf()-dayjs(a.creatAt).valueOf());
+            const newRecordList =clone(recordList).filter((r: RecordItem)=>r.type === this.typesValue).sort((a: RecordItem,b: RecordItem)=>dayjs(b.creatAt).valueOf()-dayjs(a.creatAt).valueOf());
             type storeListType =[{title: string;items: RecordItem[];sum: number}]
+            if(newRecordList.length ===0){return []}
             const storeList = [{title:dayjs(newRecordList[0].creatAt).format("YYYY-MM-DD"),items:[newRecordList[0]],sum:Number(newRecordList[0].mount)}] as storeListType;
             for (let i=1;i<newRecordList.length;i++){
                 const current = newRecordList[i];
@@ -82,8 +82,6 @@
         }
         typesValue= '-';
         typeList = typeList;
-        dateValue='day';
-        dateList = dateList;
         beforeCreate(): void {
             this.$store.commit('fetchRecord')
         }
