@@ -1,6 +1,5 @@
 <template>
     <div class="tags">
-
         <div class="new">
             <button @click="addTags">新增标签</button>
         </div>
@@ -10,6 +9,9 @@
                 :class="selectedData.indexOf(data)>=0 &&'selected'"
             >{{data.name}}
             </li>
+
+                <li> <router-link to="/labels">编辑 >></router-link>
+                </li>
 
         </ul>
     </div>
@@ -46,6 +48,7 @@
                 this.$store.commit('createTag',newTag);
 
         }
+
     }
 </script>
 

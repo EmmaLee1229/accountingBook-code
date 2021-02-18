@@ -2,7 +2,7 @@
     <div class="x" >
             <Layout>
                 <Tabs :data-source="typeList" class-prefix="types" :value.sync="typesValue" />
-                <ol class="dateList">
+                <ol class="dateList" v-if="result.length>0">
                     <li v-for="(results,index) in result" :key="index" >
                             <h3 class="title">{{formatDate(results.title)}} <span class="sumMoney">{{'¥ '+results.sum}}</span></h3>
 
@@ -15,6 +15,9 @@
                         </ol>
                     </li>
                 </ol>
+                <div v-else class="noResult">
+                    未存入任何数据
+                </div>
             </Layout>
 
     </div>
@@ -35,7 +38,7 @@
     )
     export default class Statistics extends Vue{
         tagString(tags: Tag[]) {
-            return tags.length === 0 ? '无' : tags.join(',');
+            return tags.length === 0 ? '无' : tags.map(i=>i.name).join(',');
         }
         limitShow(note: string){
             if(note.length>25){
@@ -90,6 +93,13 @@
 </script>
 
 <style scoped lang="scss">
+    .noResult {
+        padding: 10px;
+        font-size: 20px;
+        color: #495976;
+        text-align: center;
+
+    }
     .x::v-deep {
         .types-tabs-item {
             background: darken(#495976,10%);

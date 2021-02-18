@@ -32,6 +32,12 @@ const store = new Vuex.Store({
         },
         fetchTags(state) {
             state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+            if(!state.tagList || state.tagList.length ===0){
+                store.commit('createTag','衣');
+                store.commit('createTag','食');
+                store.commit('createTag','住');
+                store.commit('createTag','行');
+            }
             return state.tagList;
         },
         findTag(state, id: string) {
@@ -46,7 +52,6 @@ const store = new Vuex.Store({
             const id = createID().toString();
             state.tagList.push({id, name: name});
             store.commit('saveTags');
-            window.alert('添加成功');
             return 'success';
         },
         remove(state, id: string) {

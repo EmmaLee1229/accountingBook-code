@@ -1,6 +1,11 @@
 <template>
     <div>
         <Layout>
+            <div class="title"  >
+                <span @click="goBack" ><Icon class="left" name="left"/></span>
+                <span>编辑标签</span>
+                <span class="right"></span>
+            </div >
             <div class="labels">
                 <router-link  v-for="tag in tags" :key="tag.id"
                 :to="`/labels/EditLabel/${tag.id}`"
@@ -36,7 +41,11 @@
                this.$store.commit('createTag',name);
             }
         }
+        goBack(){
+            this.$router.back();
+        }
     }
+
 </script>
 
 <style lang="scss" scoped>
@@ -68,6 +77,26 @@
             text-align: center;
             padding: 16px;
             margin-top: 44-16px;
+        }
+    }
+    .title {
+        font-size: 20px;
+        text-align: center;
+        background: white;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 16px;
+        align-items: center;
+        color: #3A465C;
+        font-weight: bold;
+        margin-bottom: 10px;
+        >.left {
+            width: 24px;
+            height: 24px;
+        }
+        >.right {
+            width: 24px;
+            height: 24px;
         }
     }
 </style>
