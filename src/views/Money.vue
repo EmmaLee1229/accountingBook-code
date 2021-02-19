@@ -1,14 +1,10 @@
 <template>
     <Layout class-prefix="layout">
-<!--        <div class="qrcode" v-if="isShow">-->
-<!--            <img src="../../public/img/qrcode.png" alt="">-->
-<!--        </div>-->
-<!--        <div :class="{'forPop':screenWidth<=500&&screenWidth>=400,'remain':screenWidth< 400}" >-->
             <number-pad :value.sync="record.mount" @submit="updateMount"/>
-            <note name='备注' placeholder="请在这里添加备注" :value="record.note" @update:value="updateNote"/>
+             <note name='日期' type="date" :value.sync="record.creatAt"/>
+            <note name='备注' type="text" placeholder="请在这里添加备注" :value="record.note" @update:value="updateNote"/>
             <tags @update:value="updateTags"/>
             <Tabs :value.sync="record.type" :data-source="typeList" class="title"/>
-<!--        </div>-->
         <div class="box" v-if="isShow" @click="showOff">
                <div class="container">
                    <img src="../../public/img/qrcode.png" alt="">
@@ -36,10 +32,6 @@
     })
     export default class Money extends Vue {
         isShow = false;
-
-
-
-
         showCode(isShow: boolean){
             if (window.innerWidth>450){
                 console.log(window.innerWidth);
@@ -64,6 +56,7 @@
             type: "-",
             note: "",
             mount: 0,
+            creatAt:new Date().toISOString()
 
         };
         //recordList = this.$store.state.recordList;
@@ -122,10 +115,10 @@
             top: 75%;//以下3行设置弹框居中页面，根据自己页面情况选择
             left: 50%;
             transform: translate(-50%, -50%);
-
             z-index: 5;
             color: white;
         }
+
     }
 
 </style>
