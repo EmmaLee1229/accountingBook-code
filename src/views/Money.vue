@@ -3,7 +3,7 @@
             <number-pad :value.sync="record.mount" @submit="updateMount"/>
              <note name='日期' type="date" :value.sync="record.creatAt"/>
             <note name='备注' type="text" placeholder="请在这里添加备注" :value="record.note" @update:value="updateNote"/>
-            <tags @update:value="updateTags"/>
+            <tags :value.sync="record.tags"/>
             <Tabs :value.sync="record.type" :data-source="typeList" class="title"/>
         <div class="box" v-if="isShow" @click="showOff">
                <div class="container">
@@ -75,6 +75,7 @@
             this.$store.commit("createRecord", this.record);
             window.alert("添加成功");
             this.record.note = ' ';
+            this.record.tags=[];
         }
 
         updateNote(value: string) {

@@ -33,6 +33,7 @@
 
         toggle(data: string) {
             if (this.selectedData.indexOf(data) < 0) {
+                this.selectedData=[];
                 this.selectedData.push(data);
             } else {
                 this.selectedData.splice(this.selectedData.indexOf(data), 1);
