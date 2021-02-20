@@ -39,7 +39,7 @@
     .note {
         padding-left: 12px;
         font-size: 14px;
-        background: darken(#f5f5f5,5%);
+        /*background: darken(#f5f5f5,5%);*/
         display: flex;
         align-items: center;
         border-bottom:1px solid #ccc ;
